@@ -1,0 +1,20 @@
+services:
+  changedetection:
+    image: lscr.io/linuxserver/changedetection.io:latest
+    container_name: changedetection
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Zurich  # CEST for Switzerland
+      - PLAYWRIGHT_DRIVER_URL=ws://playwright:3000
+    volumes:
+      - ./config:/config
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+  playwright:
+    image: browserless/playwright:latest
+    container_name: playwright
+    environment:
+      - PLAYWRIGHT_BUILT_IN=true
+    restart: unless-stopped
